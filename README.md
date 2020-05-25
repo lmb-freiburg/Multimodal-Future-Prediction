@@ -25,7 +25,7 @@ After compilation, you should get a library under /wemd/lib, which is linked in 
 
 #### Data
 
-To reproduce our results in the paper, we provide the processed testing samples from SDD [2] used in our paper. 
+To reproduce our results in the paper, we provide the processed testing samples from SDD [2] used in our paper. Please download them from <a href="https://lmb.informatik.uni-freiburg.de/resources/binaries/Multimodal_Future_Prediction/datasets.zip">[Link]</a>
 
 After extracting the datasets.zip, you will get a set of folders representing the testing scenes. For each scene you have the following structure:
 
@@ -35,7 +35,7 @@ After extracting the datasets.zip, you will get a set of folders representing th
 
 #### Models
 
-We provide the final trained model for our EWTAD-MDF.
+We provide the final trained model for our EWTAD-MDF. Please download them from <a href="https://lmb.informatik.uni-freiburg.de/resources/binaries/Multimodal_Future_Prediction/models.zip">[Link]</a>
 
 #### Testing
 
