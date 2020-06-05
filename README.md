@@ -45,6 +45,11 @@ python test.py --output
 
 - --output: will write the output files to the disk under the path specified in the config.py (OUTPUT_FOLDER_FLN). If you need only to get the testing accuracies without writing files (much faster), you can simply remove the --output.
 
+#### Training
+
+We provide additionally the loss functions used when training our sampling-fitting network, please check the net.py file for more details.
+
+
 #### Citation
 
 If you use our repository or find it useful in your research, please cite the following paper:

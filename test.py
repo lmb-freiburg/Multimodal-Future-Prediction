@@ -63,7 +63,7 @@ for scene_index in range(len(dataset.scenes)):
         objects = np.stack(objects_list, axis=0)
         imgs = np.stack(imgs_list, axis=0)
 
-        means, sigmas, mixture_weights, hyps, hyps_sigmas, input_blob, output_blob, tmp = session.run(output,
+        means, sigmas, mixture_weights, bounded_log_sigmas, hyps, hyps_sigmas, input_blob, output_blob, tmp = session.run(output,
                                                            feed_dict={x_objects: objects,
                                                                       x_imgs: imgs})
 
