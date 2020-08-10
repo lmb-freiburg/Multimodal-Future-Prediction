@@ -33,6 +33,7 @@ After extracting the datasets.zip, you will get a set of folders representing th
 - floats: for each image, we store -features.float3 and -labels.float3 files. The former is a numpy array of shape (1154,5) which can store up to 1154 annotated objects. Each object has 5 components describing its bounding box (tl_x, tl_y, br_x, br_y, class_id). The indexes of the objects represent the tracking id and are given in the file -labels.float3.
 - scene.txt: each line represent one testing sequence and has the following format: tracking_id img_0,img_1,img_2,img_future.
 
+Additionally, we provide the processed training SDD which can be downloaded from <a href="https://lmb.informatik.uni-freiburg.de/resources/binaries/Multimodal_Future_Prediction/sdd_train.zip">[Link]</a>
 
 #### Models
 
