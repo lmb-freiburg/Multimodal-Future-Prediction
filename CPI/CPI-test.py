@@ -2,9 +2,37 @@ from Environment import Environment
 import os
 import numpy as np
 import argparse
-import tb
 import sys
+from scipy import misc
 
+def writeFloat(name, data):
+    f = open(name, 'wb')
+
+    dim=len(data.shape)
+    # if dim>3:
+    #     raise Exception('bad float file dimension: %d' % dim)
+
+    f.write(('float\n').encode('ascii'))
+    f.write(('%d\n' % dim).encode('ascii'))
+
+    if dim == 1:
+        f.write(('%d\n' % data.shape[0]).encode('ascii'))
+    else:
+        f.write(('%d\n' % data.shape[1]).encode('ascii'))
+        f.write(('%d\n' % data.shape[0]).encode('ascii'))
+        for i in range(2, dim):
+            f.write(('%d\n' % data.shape[i]).encode('ascii'))
+
+    data = data.astype(np.float32)
+    if dim==2:
+        data.tofile(f)
+    elif dim==3:
+        np.transpose(data, (2, 0, 1)).tofile(f)
+    elif dim==4:
+        np.transpose(data, (3, 2, 0, 1)).tofile(f)
+    else:
+        raise Exception('bad float file dimension: %d' % dim)
+        
 parser = argparse.ArgumentParser()
 parser.add_argument("output_folder", help='destination folder for the produced data')
 parser.add_argument("n_scenes", help='number of scenes to produce')
@@ -42,7 +70,7 @@ for i in range(int(args.n_scenes)):
     env.init_pedestrian()
     env.init_vehicle()
     env.draw_cross_road()
-    tb.write(os.path.join(scene_path, '-background.png'), np.array(env.get_image()))
+    misc.imsave(os.path.join(scene_path, '-background.png'), np.array(env.get_image()))
     env.next_state()
 
     for j in range(hist):
@@ -51,8 +79,8 @@ for i in range(int(args.n_scenes)):
         env.draw_objects()
         sample = env.get_image()
         locs = env.get_objects_locations()
-        tb.write(os.path.join(scene_path, '-sample%03d.png' % (j)), np.array(sample))
-        tb.write(os.path.join(scene_path, '-sample%03d.float3' % (j)), locs)
+        misc.imsave(os.path.join(scene_path, '-sample%03d.png' % (j)), np.array(sample))
+        writeFloat(os.path.join(scene_path, '-sample%03d.float3' % (j)), locs)
 
     # multiple ground truths for the same input sequence
     for k in range(int(args.n_gts)):
@@ -65,4 +93,4 @@ for i in range(int(args.n_scenes)):
             current_env.draw_objects()
             if (l+1) in dists:
                 locs = current_env.get_objects_locations()
-                tb.write(os.path.join(scene_path, '%03d-%06d-%03d-objects.float3' % (hist - 1, k, l)), locs)
+                writeFloat(os.path.join(scene_path, '%03d-%06d-%03d-objects.float3' % (hist - 1, k, l)), locs)
