@@ -143,7 +143,7 @@ class EWTA_MDF():
         total_loss = None
         eps = 1e-5 / 2.0
         for i in range(num_modes):
-            diff2 = tf.square(gt - hyps[i])  # (batch,2,1,1)
+            diff2 = tf.square(gt - means[i])  # (batch,2,1,1)
             diff2 = tf.add(diff2, tf.fill(diff2, eps))
             diff2 = tf.pow(diff2, 0.5)
             sigma = tf.exp(bounded_log_sigmas[i])  # (batch,2,1,1)
@@ -152,7 +152,7 @@ class EWTA_MDF():
             c = tf.multiply(diff2, sigma_inv)  # (batch,2,1,1)
             c = tf.math.reduce_sum(c, axis=1, keepdims=True)  # (batch,1,1,1)
             c_exp = tf.exp(-1 * c)
-            sxsy = nd.ops.mul(sigma[:, 0:1, :, :], sigma[:, 1:2, :, :])
+            sxsy = tf.multiply(sigma[:, 0:1, :, :], sigma[:, 1:2, :, :])
             sxsy_inv = tf.pow(sxsy + eps, -1)  # (batch,1,1,1)
             likelihood = tf.multiply(c_exp, sxsy_inv)
             likelihood_weighted = tf.multiply(likelihood, mixture_weights[i])
